@@ -3,7 +3,6 @@ require_once __DIR__ . "/../../config/config.php";
 require_once __DIR__ . "/../../app/models/Database.php";
 require_once __DIR__ . "/../../layouts/header.php";
 
-// Đảm bảo Database.php đã được sửa port thành 3306 trước đó
 $db = (new Database())->getConnection();
 $message = "";
 
@@ -11,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = trim($_POST["name"]);
     $email = trim($_POST["email"]);
 
-    // Lưu ý: Trong thực tế nên dùng password_hash() thay vì md5() để bảo mật tốt hơn
     $password = md5($_POST["password"]);
 
     $stmt = $db->prepare(
@@ -29,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 ?>
 
 <style>
-    /* Giữ nguyên CSS cũ của bạn */
     .page-wrapper {
         min-height: calc(100vh - 120px);
         display: flex;
@@ -94,7 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         font-size: 14px;
     }
 
-    /* Thêm style cho thông báo thành công */
     .msg-success {
         color: green;
         font-weight: bold;
@@ -125,9 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </div>
 
 <script>
-    // Script nhỏ để gắn link cho logo THE COFFEE HOUSE trong header
     document.addEventListener("DOMContentLoaded", function () {
-        // Tìm tất cả các phần tử chứa chữ THE COFFEE HOUSE trong header
         const logos = document.querySelectorAll('header, .logo, h1, div');
         logos.forEach(el => {
             if (el.innerText.trim() === "THE COFFEE HOUSE" && el.children.length === 0) {
