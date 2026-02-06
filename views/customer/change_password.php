@@ -108,6 +108,16 @@ button:hover {
 .success {
     color: green;
 }
+
+header .btn {
+    border-radius: 25px !important;
+    border: 1px solid #fff;
+}
+
+header.scrolled .btn {
+    border: 1px solid var(--tch-orange);
+}
+
 </style>
 
 <div class="page-wrapper">
