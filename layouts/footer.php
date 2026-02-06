@@ -2,6 +2,8 @@
     /* ===== STYLE FOOTER ĐỒNG BỘ ===== */
     footer {
         background-color: #000;
+        /* Nền đen nguyên bản */
+        color: #fff;
         padding: 60px 0 30px;
         margin-top: 80px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
