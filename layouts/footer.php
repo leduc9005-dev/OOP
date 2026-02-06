@@ -2,7 +2,6 @@
     /* ===== STYLE FOOTER ĐỒNG BỘ ===== */
     footer {
         background-color: #000;
-        /* Nền đen nguyên bản */
         color: #fff;
         padding: 60px 0 30px;
         margin-top: 80px;
@@ -13,7 +12,6 @@
         max-width: 1200px;
         margin: 0 auto;
         display: grid;
-        /* Tự động điều chỉnh số cột dựa trên độ rộng màn hình */
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 40px;
         padding: 0 20px;
@@ -22,7 +20,6 @@
 
     .footer-col h4 {
         color: var(--tch-orange);
-        /* Sử dụng màu cam thương hiệu */
         margin-bottom: 25px;
         font-size: 16px;
         font-weight: 700;
