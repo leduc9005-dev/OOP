@@ -25,7 +25,7 @@ $db   = new Database();
 $conn = $db->getConnection();
 
 // ===== LẤY ĐIỂM =====
-$stmt = $conn->prepare("SELECT points FROM customers WHERE email = ?");
+$stmt = $conn->prepare("SELECT points FROM users WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();

@@ -24,6 +24,7 @@ class User {
     }
 
     /* ===== ADMIN: CUSTOMER CRUD ===== */
+
     public function getAllCustomers() {
         return $this->conn->query("SELECT * FROM users WHERE role='customer'");
     }
@@ -42,6 +43,10 @@ class User {
             "INSERT INTO users(name,email,password,role) VALUES (?,?,?,?)"
         );
         return $stmt->bind_param("ssss", $name, $email, $hash, $role) && $stmt->execute();
+    }
+
+    public function addCustomer($name, $email, $password) {
+        return $this->createCustomer($name, $email, $password);
     }
 
     public function updateCustomer($id, $name, $email) {
@@ -64,25 +69,51 @@ class User {
         return $stmt->bind_param("ii", $points, $id) && $stmt->execute();
     }
 
-    /* ===== VOUCHER ===== */
+    /* ===== ĐỔI 1000 ĐIỂM = 10K ===== */
     public function exchangeVoucherByInfo($email, $phone) {
-    $stmt = $this->conn->prepare(
-        "SELECT id, points FROM users WHERE email=? AND phone=? AND role='customer' LIMIT 1"
-    );
-    $stmt->bind_param("ss", $email, $phone);
-    $stmt->execute();
-    $user = $stmt->get_result()->fetch_assoc();
+        $stmt = $this->conn->prepare(
+            "SELECT id, points FROM users WHERE email=? AND phone=? AND role='customer' LIMIT 1"
+        );
+        $stmt->bind_param("ss", $email, $phone);
+        $stmt->execute();
+        $user = $stmt->get_result()->fetch_assoc();
 
-    if (!$user || $user['points'] < 1000) {
-        return false;
+        if (!$user || $user['points'] < 1000) {
+            return false;
+        }
+
+        $stmt = $this->conn->prepare(
+            "UPDATE users SET points = points - 1000 WHERE id=?"
+        );
+        $stmt->bind_param("i", $user['id']);
+        $stmt->execute();
+
+        return true;
     }
 
-    $stmt = $this->conn->prepare(
-        "UPDATE users SET points = points - 1000 WHERE id=?"
-    );
-    $stmt->bind_param("i", $user['id']);
-    $stmt->execute();
+    /* ===== ĐỔI LINH HOẠT (NHẬP SỐ TIỀN) ===== */
+    public function exchangeVoucherFlexible($email, $phone, $money) {
+        if ($money <= 0) return false;
 
-    return true;
-}
+        $pointsNeeded = ($money / 10000) * 1000;
+
+        $stmt = $this->conn->prepare(
+            "SELECT id, points FROM users WHERE email=? AND phone=? AND role='customer' LIMIT 1"
+        );
+        $stmt->bind_param("ss", $email, $phone);
+        $stmt->execute();
+        $user = $stmt->get_result()->fetch_assoc();
+
+        if (!$user || $user['points'] < $pointsNeeded) {
+            return false;
+        }
+
+        $stmt = $this->conn->prepare(
+            "UPDATE users SET points = points - ? WHERE id=?"
+        );
+        $stmt->bind_param("ii", $pointsNeeded, $user['id']);
+        $stmt->execute();
+
+        return true;
+    }
 }
