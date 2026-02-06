@@ -9,14 +9,14 @@ $message = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = trim($_POST["name"]);
     $email = trim($_POST["email"]);
-    $sdt = trim($_POST["sdt"]);
+    $phone = trim($_POST["phone"]);
     $password = md5($_POST["password"]);
 
     $stmt = $db->prepare(
         "INSERT INTO users (name, email, phone, password, role, points)
          VALUES (?, ?, ?, ?, 'customer', 0)"
     );
-    $stmt->bind_param("ssss", $name, $email, $sdt, $password);
+    $stmt->bind_param("ssss", $name, $email, $phone, $password);
 
     if ($stmt->execute()) {
         $message = "Đăng ký thành công! <a href='login.php'>Đăng nhập ngay</a>";
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <form method="post">
             <input name="name" placeholder="Họ tên" required>
             <input name="email" type="email" placeholder="Email" required>
-            <input name="sdt" placeholder="Số điện thoại" required>
+            <input name="phone" placeholder="Số điện thoại" required>
             <input name="password" type="password" placeholder="Mật khẩu" required>
             <button type="submit">Đăng ký</button>
         </form>
