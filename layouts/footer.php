@@ -47,7 +47,6 @@
     .footer-col ul li a:hover {
         color: #fff;
         padding-left: 5px;
-        /* Hiệu ứng trượt nhẹ khi hover */
     }
 
     .footer-col p {
@@ -57,7 +56,6 @@
         margin: 0;
     }
 
-    /* Social Icons */
     .social-links {
         display: flex;
         gap: 20px;
@@ -75,7 +73,6 @@
         transform: translateY(-3px);
     }
 
-    /* Bản quyền */
     .footer-bottom {
         border-top: 1px solid #333;
         max-width: 1200px;
